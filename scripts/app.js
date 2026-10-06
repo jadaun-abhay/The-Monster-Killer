@@ -10,6 +10,22 @@ let currentPlayerHealth = chosenMaxLife;
 
 adjustHealthBars(chosenMaxLife);
 
+function resetGame() {
+    currentMonsterHealth = chosenMaxLife;
+    currentPlayerHealth = chosenMaxLife;
+    adjustHealthBars(chosenMaxLife);
+}
+
+function useBonusLifeOrResetGame() {
+    if (currentPlayerHealth <= 0 && +bonusLifeEl.textContent) {
+        currentPlayerHealth = chosenMaxLife;
+        setPlayerHealth(chosenMaxLife);
+        removeBonusLife();
+    } else {
+        resetGame();
+    }
+}
+
 function attackMonster(damage) {
     const damageValue = dealMonsterDamage(damage);
     currentMonsterHealth -= damageValue;
@@ -30,9 +46,11 @@ function attack(receiver, damage) {
 
 function checkWin() {
     if (currentPlayerHealth <= 0 && currentMonsterHealth > 0) {
+        useBonusLifeOrResetGame();
         alert("You lose !");
     }
     if (currentMonsterHealth <= 0 && currentPlayerHealth > 0) {
+        resetGame();
         alert("You win !");
     }
 }
