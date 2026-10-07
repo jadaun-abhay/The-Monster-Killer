@@ -18,6 +18,7 @@ function resetGame() {
 
 function useBonusLifeOrResetGame() {
     if (currentPlayerHealth <= 0 && +bonusLifeEl.textContent) {
+        alert("Bonus Life !!");
         currentPlayerHealth = chosenMaxLife;
         setPlayerHealth(chosenMaxLife);
         removeBonusLife();
