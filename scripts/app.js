@@ -35,7 +35,6 @@ function useBonusLifeOrResetGame() {
 function logRecord(logObject) {
     logObject = { ...logObject, currentPlayerHealth, currentMonsterHealth };
     log.push(logObject);
-    console.log(logObject);
 }
 
 function attackMonster(damage) {
@@ -92,6 +91,11 @@ function healPlayerHandler() {
     logRecord({ logType: "heal", performedBy: "player" });
 }
 
+function logPlayer() {
+    console.log(log);
+}
+
 attackBtn.addEventListener("click", attackHandler);
 strongAttackBtn.addEventListener("click", strongAttackHandler);
 healBtn.addEventListener("click", healPlayerHandler);
+logBtn.addEventListener("click", logPlayer);
