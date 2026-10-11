@@ -2,10 +2,11 @@ const attackValue = 10;
 const strongAttackValue = 17;
 const monsterAttackValue = 14;
 const healValue = 20;
+const log = [];
 
 let chosenMaxLife = parseInt(prompt("Enter the maxiumum life.", "100"));
 
-if (isNan(chosenMaxLife) || chosenMaxLife <= 0) {
+if (chosenMaxLife === NaN || chosenMaxLife <= 0) {
     chosenMaxLife = 100;
 }
 
@@ -31,14 +32,22 @@ function useBonusLifeOrResetGame() {
     }
 }
 
+function logRecord(logObject) {
+    logObject = { ...logObject, currentPlayerHealth, currentMonsterHealth };
+    log.push(logObject);
+    console.log(logObject);
+}
+
 function attackMonster(damage) {
     const damageValue = dealMonsterDamage(damage);
     currentMonsterHealth -= damageValue;
+    logRecord({ logType: "attack", attacker: "player", receiver: "monster" });
 }
 
 function attackPlayer(damage) {
     const damageValue = dealPlayerDamage(damage);
     currentPlayerHealth -= damageValue;
+    logRecord({ logType: "attack", attacker: "monster", receiver: "player" });
 }
 
 function attack(receiver, damage) {
@@ -80,6 +89,7 @@ function healPlayerHandler() {
     } else {
         currentPlayerHealth = increasePlayerHealth(healValue);
     }
+    logRecord({ logType: "heal", performedBy: "player" });
 }
 
 attackBtn.addEventListener("click", attackHandler);
